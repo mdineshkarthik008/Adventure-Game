@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Night Adventure</title>
+    <style>
+        body {
+            background-color: #1b1f3b;
+            color: white;
+            text-align: center;
+            padding: 60px;
+            font-family: Arial;
+        }
+
+        #storyBox {
+            font-size: 20px;
+            margin-bottom: 30px;
+            min-height: 100px;
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            background-color: green;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+
+<h1>🌙 Night Adventure</h1>
+
+<div id="storyBox">Click Next to start the story...</div>
+
+<button id="nextBtn">Next</button>
+
+<script>
+    let story = [];
+    let currentIndex = 0;
+
+    fetch("/story")
+        .then(response => response.json())
+        .then(data => {
+            story = data;
+        });
+
+    document.getElementById("nextBtn").addEventListener("click", () => {
+
+        if (story.length === 0) {
+            alert("Story loading...");
+            return;
+        }
+
+        if (currentIndex < story.length) {
+            document.getElementById("storyBox").innerText = story[currentIndex];
+            currentIndex++;
+        } else {
+            document.getElementById("storyBox").innerText = "🌅 The Night Adventure has ended.";
+        }
+
+    });
+</script>
+
+</body>
+</html>
+
